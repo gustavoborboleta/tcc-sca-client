@@ -27,7 +27,10 @@ function App({ Component, pageProps }: AppProps) {
         ></link>
       </Head>
       <GlobalStyles />
-      <Layout>
+      <Layout
+        isAuthenticated={pageProps.isAuthenticated}
+        user={pageProps.loggedUser}
+      >
         <Component {...pageProps} />
       </Layout>
     </ThemeProvider>

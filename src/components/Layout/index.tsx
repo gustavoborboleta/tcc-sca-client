@@ -1,28 +1,28 @@
 import * as S from './styles'
-import Head from 'next/head'
 import Link from 'next/link'
+import defaultPage from '../../utils/auth/defaultPage'
 import { unsetToken } from '../../utils/auth/auth'
 import { Container, Nav, NavItem } from 'reactstrap'
 
 export type LayoutProps = {
   children: React.ReactNode
+  isAuthenticated: boolean
+  user: string
 }
 
-const Layout = ({ children }: LayoutProps) => (
-  <S.Wrapper>
+const Layout = ({ children, isAuthenticated, user }: LayoutProps) => (
+  <>
     <header>
       <Nav className="navbar navbar-dark bg-dark">
         <NavItem>
           <Link href="/">
-            <a className="navbar-brand">Home</a>
+            <a className="navbar-brand">SCA</a>
           </Link>
         </NavItem>
-        {/* {isAuthenticated ? (
+        {isAuthenticated ? (
           <>
             <NavItem className="ml-auto">
-              <span style={{ color: 'white', marginRight: 30 }}>
-                {this.props.loggedUser}
-              </span>
+              <span style={{ color: 'white', marginRight: 30 }}>{user}</span>
             </NavItem>
             <NavItem>
               <Link href="/">
@@ -35,24 +35,18 @@ const Layout = ({ children }: LayoutProps) => (
         ) : (
           <>
             <NavItem className="ml-auto">
-              <Link href="/signin">
+              <Link href="/login">
                 <a className="nav-link">Sign In</a>
               </Link>
             </NavItem>
-
-            <NavItem>
-              <Link href="/signup">
-                <a className="nav-link"> Sign Up</a>
-              </Link>
-            </NavItem>
           </>
-        )} */}
+        )}
       </Nav>
     </header>
 
     <Container>{children}</Container>
     <footer className="footer">
-      {'Strapi footer'}
+      {'PUC'}
       <style jsx>
         {`
           .footer {
@@ -70,7 +64,7 @@ const Layout = ({ children }: LayoutProps) => (
         `}
       </style>
     </footer>
-  </S.Wrapper>
+  </>
 )
 
-export default Layout
+export default defaultPage(Layout)
