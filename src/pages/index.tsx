@@ -1,5 +1,8 @@
 import Main from 'components/Main'
+import defaultPage from '../utils/auth/defaultPage'
 
-export default function Home() {
+function Home() {
   return <Main />
 }
+
+export default defaultPage(Home)
