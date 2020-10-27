@@ -46,15 +46,14 @@ const Layout = ({ children, isAuthenticated, user }: LayoutProps) => (
 
     <Container>{children}</Container>
     <footer className="footer">
-      {'PUC'}
+      {'Gustavo Soares dos Santos - 2020'}
       <style jsx>
         {`
           .footer {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 60px;
-            line-height: 60px;
+            padding: 10px 50px;
             background-color: #f5f5f5;
           }
           a:hover {

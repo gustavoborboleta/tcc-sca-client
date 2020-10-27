@@ -7,16 +7,22 @@ import Router from 'next/router'
 const apiUrl = process.env.API_URL || 'http://localhost:1337'
 const strapi = new Strapi(apiUrl)
 
-//use strapi to get a JWT and token object, save
-//to approriate cookei for future requests
+export const axios = () => {
+  return strapi.axios
+}
+
 export const strapiLogin = (email, password) => {
   if (!process.browser) {
     return
   }
-  // Get a token
-  strapi.login(email, password).then((res) => {
-    setToken(res)
-  })
+  strapi
+    .login(email, password)
+    .then((res) => {
+      setToken(res)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   return Promise.resolve()
 }
 
@@ -41,7 +47,6 @@ export const unsetToken = () => {
   Cookies.remove('username')
   Cookies.remove('user')
 
-  // to support logging out from all windows
   window.localStorage.setItem('logout', Date.now())
   Router.push('/')
 }
@@ -72,7 +77,6 @@ export const getUserFromLocalCookie = () => {
   return Cookies.get('username')
 }
 
-//these will be used if you expand to a provider such as Auth0
 const getQueryParams = () => {
   const params = {}
   window.location.href.replace(
@@ -83,6 +87,7 @@ const getQueryParams = () => {
   )
   return params
 }
+
 export const extractInfoFromHash = () => {
   if (!process.browser) {
     return undefined
