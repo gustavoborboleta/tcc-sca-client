@@ -1,54 +1,39 @@
 import jwtDecode from 'jwt-decode'
 import Cookies from 'js-cookie'
 import Strapi from 'strapi-sdk-javascript/build/main'
-
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 
 const apiUrl = process.env.API_URL || 'http://localhost:1337'
-const strapi = new Strapi(apiUrl)
+export const strapi = new Strapi(apiUrl)
 
-export const axios = () => {
-  return strapi.axios
-}
-
-export const strapiLogin = (email, password) => {
-  if (!process.browser) {
-    return
-  }
-  strapi
+export const StrapiLogin = (email, password) => {
+  return strapi
     .login(email, password)
     .then((res) => {
-      setToken(res)
+      SetToken(res)
+      return Promise.resolve(res.user)
     })
     .catch((error) => {
-      console.log(error)
+      return Promise.reject(error)
     })
-  return Promise.resolve()
 }
 
-export const setToken = (token) => {
-  if (!process.browser) {
-    return
-  }
-  Cookies.set('user', token.user)
+export const SetToken = (token) => {
   Cookies.set('username', token.user.username)
   Cookies.set('jwt', token.jwt)
+  Cookies.set('user', JSON.stringify(token.user))
 
   if (Cookies.get('username')) {
     Router.push('/')
   }
 }
 
-export const unsetToken = () => {
-  if (!process.browser) {
-    return
-  }
+export const UnsetToken = () => {
   Cookies.remove('jwt')
   Cookies.remove('username')
   Cookies.remove('user')
-
-  window.localStorage.setItem('logout', Date.now())
-  Router.push('/')
+  const router = useRouter()
+  router.push('/')
 }
 
 export const getUserFromServerCookie = (req) => {

@@ -1,6 +1,4 @@
 import * as S from './styles'
-import defaultPage from '../../utils/auth/defaultPage'
-// import Router from 'next/router'
 import {
   Container,
   Row,
@@ -11,15 +9,17 @@ import {
   Label,
   Input
 } from 'reactstrap'
-import Cookies from 'js-cookie'
-import { useState } from 'react'
-import { strapiLogin } from 'utils/auth/auth'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../contexts/auth'
+import { StrapiLogin } from 'utils/auth/auth'
 
 const Signin = () => {
   const [data, setData] = useState({
     email: '',
     password: ''
   })
+
+  const { user, setUser } = useContext(AuthContext)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -30,10 +30,16 @@ const Signin = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    strapiLogin(data.email, data.password)!.then(() =>
-      console.log(Cookies.get('user'))
-    )
+    StrapiLogin(data.email, data.password)
+      .then((res) => {
+        console.log(res)
+        setUser({
+          ...res
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (
@@ -131,4 +137,4 @@ const Signin = () => {
   )
 }
 
-export default defaultPage(Signin)
+export default Signin
