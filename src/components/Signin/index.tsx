@@ -1,17 +1,10 @@
 import * as S from './styles'
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input
-} from 'reactstrap'
+import { Container, Row, Col, Form, FormGroup, Label, Input } from 'reactstrap'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../contexts/auth'
 import { StrapiLogin } from 'utils/auth/auth'
+import Heading from '../Heading'
+import Button from '../Button'
 
 const Signin = () => {
   const [data, setData] = useState({
@@ -63,7 +56,9 @@ const Signin = () => {
                   }}
                 >
                   <FormGroup>
-                    <Label>Email:</Label>
+                    <Heading color={'black'} lineLeft={true}>
+                      Email:
+                    </Heading>
                     <Input
                       onChange={(e) => onChange(e)}
                       value={data.email}
@@ -74,7 +69,9 @@ const Signin = () => {
                     />
                   </FormGroup>
                   <FormGroup style={{ marginBottom: 30 }}>
-                    <Label>Password:</Label>
+                    <Heading color={'black'} lineLeft={true}>
+                      Password:
+                    </Heading>
                     <Input
                       onChange={(e) => onChange(e)}
                       value={data.password}
@@ -85,11 +82,7 @@ const Signin = () => {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Button
-                      style={{ float: 'right', width: 120 }}
-                      color="primary"
-                      type="submit"
-                    >
+                    <Button fullWidth={true} size="medium" type="submit">
                       Submit
                     </Button>
                   </FormGroup>
@@ -109,9 +102,6 @@ const Signin = () => {
               border-radius: 6px;
               margin-top: 90px;
             }
-            .notification {
-              color: #ab003c;
-            }
             .header {
               width: 100%;
               height: 120px;
@@ -123,7 +113,7 @@ const Signin = () => {
               padding: 10px 30px 20px 30px !important;
             }
             a {
-              color: blue !important;
+              color: #2196f3 !important;
             }
             img {
               object-fit: contain;
