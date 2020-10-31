@@ -21,9 +21,23 @@ const Layout = ({ children }: LayoutProps) => {
               <a className="navbar-brand">SCA</a>
             </Link>
             {isAuthenticated ? (
-              <Link href="/tools">
-                <a className="navbar-brand">Tools</a>
-              </Link>
+              <>
+                <Link href="/tools">
+                  <a className="navbar-brand">Tools</a>
+                </Link>
+                <Link href="/maintenances">
+                  <a className="navbar-brand">Maintenances</a>
+                </Link>
+                <Link href="/activities">
+                  <a className="navbar-brand">Activities</a>
+                </Link>
+                <Link href="/occurrences">
+                  <a className="navbar-brand">Occurrences</a>
+                </Link>
+                <Link href="/monitorings">
+                  <a className="navbar-brand">Monitorings</a>
+                </Link>
+              </>
             ) : null}
           </NavItem>
           {isAuthenticated ? (
@@ -45,7 +59,7 @@ const Layout = ({ children }: LayoutProps) => {
         </Nav>
       </header>
 
-      <Container>
+      <Container className="overflow-auto">
         <SecurePage>{children}</SecurePage>
       </Container>
       <footer className="footer">
@@ -58,10 +72,6 @@ const Layout = ({ children }: LayoutProps) => {
               width: 100%;
               padding: 10px 50px;
               background-color: #f5f5f5;
-            }
-            a:hover {
-              cursor: pointer;
-              color: yellow;
             }
           `}
         </style>

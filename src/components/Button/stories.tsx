@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/react/types-6-0'
-import { Add } from '@styled-icons/ionicons-outline/Add'
+import { AddShoppingCart } from '@styled-icons/material-outlined/AddShoppingCart'
 import Button from '.'
 
 export default {
@@ -18,13 +18,22 @@ export default {
 export const Default: Story = (args) => <Button {...args} />
 
 Default.args = {
-  children: 'Add'
+  children: 'Buy now'
 }
 
 export const withIcon: Story = (args) => <Button {...args} />
 
 withIcon.args = {
   size: 'small',
-  children: 'Add',
-  icon: <Add />
+  children: 'Buy now',
+  icon: <AddShoppingCart />
+}
+
+export const asLink: Story = (args) => <Button {...args} />
+
+asLink.args = {
+  size: 'large',
+  children: 'Buy now',
+  as: 'a',
+  href: '/link'
 }

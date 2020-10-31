@@ -6,8 +6,8 @@ import Button from '../components/Button'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
-const Tools = () => {
-  const { data, error } = useSWR('/tools', fetcher)
+const Occurrences = () => {
+  const { data, error } = useSWR('/occurrences', fetcher)
   const router = useRouter()
 
   if (error) return 'An error has occurred.'
@@ -19,7 +19,7 @@ const Tools = () => {
   }
 
   const goEdit = (id: number) => {
-    router.push(`/tools/edit/${id}`)
+    router.push(`/occurrences/edit/${id}`)
   }
 
   return (
@@ -28,28 +28,34 @@ const Tools = () => {
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Maintenance</th>
+            <th scope="col">Title</th>
+            <th scope="col">Level</th>
+            <th scope="col">Shift</th>
+            <th scope="col">Sector</th>
+            <th scope="col">Mine</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          {data.map((tool: any) => (
-            <tr key={tool.id}>
-              <th scope="row">{tool.id}</th>
-              <td>{tool.Name}</td>
-              <td>{tool.tool_maintenance.Date}</td>
+          {data.map((occurrences: any) => (
+            <tr key={occurrences.id}>
+              <th scope="row">{occurrences.id}</th>
+              <td>{occurrences.Title}</td>
+              <td>{occurrences.level}</td>
+              <td>{occurrences.shift.Name}</td>
+              <td>{occurrences.sector.Name}</td>
+              <td>{occurrences.mine.Name}</td>
               <td>
                 <Button
-                  onClick={() => goEdit(tool.id)}
-                  className="mx-1"
+                  onClick={() => goEdit(occurrences.id)}
+                  className="m-1"
                   size="small"
                 >
                   Edit
                 </Button>
                 <Button
-                  onClick={() => onDelete(tool.id)}
-                  className="mx-1"
+                  onClick={() => onDelete(occurrences.id)}
+                  className="m-1"
                   size="small"
                 >
                   Delete
@@ -63,4 +69,4 @@ const Tools = () => {
   )
 }
 
-export default Tools
+export default Occurrences

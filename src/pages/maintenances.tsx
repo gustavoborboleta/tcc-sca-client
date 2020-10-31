@@ -6,8 +6,8 @@ import Button from '../components/Button'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
-const Tools = () => {
-  const { data, error } = useSWR('/tools', fetcher)
+const Maintenance = () => {
+  const { data, error } = useSWR('/tool-maintenances', fetcher)
   const router = useRouter()
 
   if (error) return 'An error has occurred.'
@@ -19,7 +19,7 @@ const Tools = () => {
   }
 
   const goEdit = (id: number) => {
-    router.push(`/tools/edit/${id}`)
+    router.push(`/maintenances/edit/${id}`)
   }
 
   return (
@@ -28,27 +28,29 @@ const Tools = () => {
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Maintenance</th>
+            <th scope="col">Date</th>
+            <th scope="col">Description</th>
+            <th scope="col">Tool</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          {data.map((tool: any) => (
-            <tr key={tool.id}>
-              <th scope="row">{tool.id}</th>
-              <td>{tool.Name}</td>
-              <td>{tool.tool_maintenance.Date}</td>
+          {data.map((maintenance: any) => (
+            <tr key={maintenance.id}>
+              <th scope="row">{maintenance.id}</th>
+              <td>{maintenance.Date}</td>
+              <td>{maintenance.Description}</td>
+              <td>{maintenance.tool ? maintenance.tool.Name : null}</td>
               <td>
                 <Button
-                  onClick={() => goEdit(tool.id)}
+                  onClick={() => goEdit(maintenance.id)}
                   className="mx-1"
                   size="small"
                 >
                   Edit
                 </Button>
                 <Button
-                  onClick={() => onDelete(tool.id)}
+                  onClick={() => onDelete(maintenance.id)}
                   className="mx-1"
                   size="small"
                 >
@@ -63,4 +65,4 @@ const Tools = () => {
   )
 }
 
-export default Tools
+export default Maintenance
