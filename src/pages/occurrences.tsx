@@ -3,6 +3,7 @@ import { Table } from 'reactstrap'
 import useSWR from 'swr'
 import { strapi } from 'utils/auth/auth'
 import Button from '../components/Button'
+import Heading from '../components/Heading'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
@@ -24,6 +25,16 @@ const Occurrences = () => {
 
   return (
     <>
+      <div className="py-5 d-flex justify-content-between">
+        <div className="mx-1">
+          <Heading color={'black'} lineLeft={true}>
+            Occurrences
+          </Heading>
+        </div>
+        <Button className="mx-1" size="small">
+          Create
+        </Button>
+      </div>
       <Table hover>
         <thead>
           <tr>

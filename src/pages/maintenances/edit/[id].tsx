@@ -5,6 +5,7 @@ import { Form, FormGroup, Label, Input } from 'reactstrap'
 import useSWR from 'swr'
 import { strapi } from 'utils/auth/auth'
 import Button from '../../../components/Button'
+import Heading from '../../../components/Heading'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -83,67 +84,79 @@ const Maintenances = () => {
   }
 
   return data && tools ? (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault()
-        onSubmit()
-        e.stopPropagation()
-      }}
-    >
-      <FormGroup>
-        <Label for="tools">Mine</Label>
-        <Input
-          onChange={(e) => onChangeTool(e)}
-          required
-          type="select"
-          name="tools"
-          id="tools"
-          style={{ height: 50, fontSize: '1.2em' }}
-        >
-          <option>Select</option>
-          {tools.map((tool: ToolProps) => {
-            if (!tool.tool_maintenance) {
-              return (
-                <option value={tool.id} key={tool.id}>
-                  {tool.Name}
-                </option>
-              )
-            }
-          })}
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="date">Date</Label>
-        <br></br>
-        <DatePicker
-          id="date"
-          name="date"
-          selected={startDate}
-          required
-          onChange={(date: Date) => setStartDate(date)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="description">Description</Label>
-        <Input
-          onChange={(e) => onChange(e)}
-          value={maintenances.Description}
-          type="text"
-          name="Description"
-          id="description"
-          required
-          style={{ height: 50, fontSize: '1.2em' }}
-        />
-      </FormGroup>
-      <div className="float-left">
-        <Link href="/maintenances">
-          <Button>Cancel</Button>
-        </Link>
+    <>
+      <div className="py-5 d-flex justify-content-between">
+        <div className="mx-1">
+          <Heading color={'black'} lineLeft={true}>
+            Maintenance - edit
+          </Heading>
+        </div>
+        <Button className="mx-1" size="small">
+          Delete
+        </Button>
       </div>
-      <Button className="float-right" type="submit">
-        Save
-      </Button>
-    </Form>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault()
+          onSubmit()
+          e.stopPropagation()
+        }}
+      >
+        <FormGroup>
+          <Label for="tools">Mine</Label>
+          <Input
+            onChange={(e) => onChangeTool(e)}
+            required
+            type="select"
+            name="tools"
+            id="tools"
+            style={{ height: 50, fontSize: '1.2em' }}
+          >
+            <option>Select</option>
+            {tools.map((tool: ToolProps) => {
+              if (!tool.tool_maintenance) {
+                return (
+                  <option value={tool.id} key={tool.id}>
+                    {tool.Name}
+                  </option>
+                )
+              }
+            })}
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="date">Date</Label>
+          <br></br>
+          <DatePicker
+            id="date"
+            name="date"
+            selected={startDate}
+            required
+            onChange={(date: Date) => setStartDate(date)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="description">Description</Label>
+          <Input
+            onChange={(e) => onChange(e)}
+            value={maintenances.Description}
+            type="text"
+            name="Description"
+            id="description"
+            required
+            style={{ height: 50, fontSize: '1.2em' }}
+          />
+        </FormGroup>
+        <div className="float-left">
+          <Link href="/maintenances">
+            <Button>Cancel</Button>
+          </Link>
+        </div>
+        <Button className="float-right" type="submit">
+          Save
+        </Button>
+      </Form>
+    </>
   ) : null
 }
 

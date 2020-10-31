@@ -5,9 +5,8 @@ import { Form, FormGroup, Label, Input } from 'reactstrap'
 import useSWR from 'swr'
 import { strapi } from 'utils/auth/auth'
 import Button from '../../../components/Button'
-
+import Heading from '../../../components/Heading'
 import DatePicker from 'react-datepicker'
-
 import 'react-datepicker/dist/react-datepicker.css'
 
 type ActivitiesProps = {
@@ -131,110 +130,122 @@ const Activities = () => {
   console.log(mineSelect)
 
   return data && activities && mines && sectors && shifts ? (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault()
-        onSubmit()
-        e.stopPropagation()
-      }}
-    >
-      <FormGroup>
-        <Label for="name">Description</Label>
-        <Input
-          onChange={(e) => onChange(e)}
-          value={activities.Description}
-          type="text"
-          name="Description"
-          id="name"
-          required
-          placeholder="Chave de fenda"
-          style={{ height: 50, fontSize: '1.2em' }}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="date">Date</Label>
-        <br></br>
-        <DatePicker
-          id="date"
-          name="date"
-          selected={startDate}
-          required
-          onChange={(date: Date) => setStartDate(date)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="mine">Mine</Label>
-        <Input
-          onChange={(e) => onChangeMine(e)}
-          required
-          type="select"
-          name="mine"
-          id="mine"
-          style={{ height: 50, fontSize: '1.2em' }}
-        >
-          <option>Select</option>
-          {mines.map((mine: MineProps) => (
-            <option value={mine.id} key={mine.id}>
-              {mine.Name}
-            </option>
-          ))}
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="mine">Sector</Label>
-        <Input
-          onChange={(e) => onChangeSector(e)}
-          disabled={mineSelect.sectors ? false : true}
-          required
-          type="select"
-          name="mine"
-          id="mine"
-          style={{ height: 50, fontSize: '1.2em' }}
-        >
-          {mineSelect.sectors ? (
-            <>
-              <option>Select</option>
-              {mineSelect.sectors.map((mine: SectorProps) => (
-                <option value={mine.id} key={mine.id}>
-                  {mine.Name}
-                </option>
-              ))}
-            </>
-          ) : null}
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="mine">Shift</Label>
-        <Input
-          onChange={(e) => onChangeShift(e)}
-          disabled={sectorSelect.shifts && mineSelect.sectors ? false : true}
-          type="select"
-          name="mine"
-          required
-          id="mine"
-          style={{ height: 50, fontSize: '1.2em' }}
-        >
-          {sectorSelect.shifts ? (
-            <>
-              <option>Select</option>
-              {sectorSelect.shifts.map((shift: ShiftProps) => (
-                <option value={shift.id} key={shift.id}>
-                  {shift.Name}
-                </option>
-              ))}
-            </>
-          ) : null}
-        </Input>
-      </FormGroup>
-      <div className="float-left">
-        <Link href="/activities">
-          <Button>Cancel</Button>
-        </Link>
+    <>
+      <div className="py-5 d-flex justify-content-between">
+        <div className="mx-1">
+          <Heading color={'black'} lineLeft={true}>
+            Activitie - edit
+          </Heading>
+        </div>
+        <Button className="mx-1" size="small">
+          Delete
+        </Button>
       </div>
-      <Button className="float-right" type="submit">
-        Save
-      </Button>
-    </Form>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault()
+          onSubmit()
+          e.stopPropagation()
+        }}
+      >
+        <FormGroup>
+          <Label for="name">Description</Label>
+          <Input
+            onChange={(e) => onChange(e)}
+            value={activities.Description}
+            type="text"
+            name="Description"
+            id="name"
+            required
+            placeholder="Chave de fenda"
+            style={{ height: 50, fontSize: '1.2em' }}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="date">Date</Label>
+          <br></br>
+          <DatePicker
+            id="date"
+            name="date"
+            selected={startDate}
+            required
+            onChange={(date: Date) => setStartDate(date)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="mine">Mine</Label>
+          <Input
+            onChange={(e) => onChangeMine(e)}
+            required
+            type="select"
+            name="mine"
+            id="mine"
+            style={{ height: 50, fontSize: '1.2em' }}
+          >
+            <option>Select</option>
+            {mines.map((mine: MineProps) => (
+              <option value={mine.id} key={mine.id}>
+                {mine.Name}
+              </option>
+            ))}
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="mine">Sector</Label>
+          <Input
+            onChange={(e) => onChangeSector(e)}
+            disabled={mineSelect.sectors ? false : true}
+            required
+            type="select"
+            name="mine"
+            id="mine"
+            style={{ height: 50, fontSize: '1.2em' }}
+          >
+            {mineSelect.sectors ? (
+              <>
+                <option>Select</option>
+                {mineSelect.sectors.map((mine: SectorProps) => (
+                  <option value={mine.id} key={mine.id}>
+                    {mine.Name}
+                  </option>
+                ))}
+              </>
+            ) : null}
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="mine">Shift</Label>
+          <Input
+            onChange={(e) => onChangeShift(e)}
+            disabled={sectorSelect.shifts && mineSelect.sectors ? false : true}
+            type="select"
+            name="mine"
+            required
+            id="mine"
+            style={{ height: 50, fontSize: '1.2em' }}
+          >
+            {sectorSelect.shifts ? (
+              <>
+                <option>Select</option>
+                {sectorSelect.shifts.map((shift: ShiftProps) => (
+                  <option value={shift.id} key={shift.id}>
+                    {shift.Name}
+                  </option>
+                ))}
+              </>
+            ) : null}
+          </Input>
+        </FormGroup>
+        <div className="float-left">
+          <Link href="/activities">
+            <Button>Cancel</Button>
+          </Link>
+        </div>
+        <Button className="float-right" type="submit">
+          Save
+        </Button>
+      </Form>
+    </>
   ) : null
 }
 

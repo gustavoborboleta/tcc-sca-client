@@ -1,6 +1,7 @@
 import { Table } from 'reactstrap'
 import useSWR from 'swr'
 import { strapi } from 'utils/auth/auth'
+import Heading from '../components/Heading'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
@@ -13,6 +14,11 @@ const Monitorings = () => {
 
   return (
     <>
+      <div className="py-5 mx-1">
+        <Heading color={'black'} lineLeft={true}>
+          Monitorings
+        </Heading>
+      </div>
       <Table hover>
         <thead>
           <tr>

@@ -3,6 +3,7 @@ import { Table } from 'reactstrap'
 import useSWR from 'swr'
 import { strapi } from 'utils/auth/auth'
 import Button from '../components/Button'
+import Heading from '../components/Heading'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
@@ -24,6 +25,16 @@ const Maintenance = () => {
 
   return (
     <>
+      <div className="py-5 d-flex justify-content-between">
+        <div className="mx-1">
+          <Heading color={'black'} lineLeft={true}>
+            Maintenance
+          </Heading>
+        </div>
+        <Button className="mx-1" size="small">
+          Create
+        </Button>
+      </div>
       <Table hover>
         <thead>
           <tr>
@@ -44,14 +55,14 @@ const Maintenance = () => {
               <td>
                 <Button
                   onClick={() => goEdit(maintenance.id)}
-                  className="mx-1"
+                  className="m-1"
                   size="small"
                 >
                   Edit
                 </Button>
                 <Button
                   onClick={() => onDelete(maintenance.id)}
-                  className="mx-1"
+                  className="m-1"
                   size="small"
                 >
                   Delete

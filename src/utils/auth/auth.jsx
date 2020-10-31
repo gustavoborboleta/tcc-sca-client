@@ -33,7 +33,7 @@ export const UnsetToken = () => {
   Cookies.remove('username')
   Cookies.remove('user')
   const router = useRouter()
-  router.push('/')
+  router.push('/monitorings')
 }
 
 export const getUserFromServerCookie = (req) => {

@@ -1,7 +1,9 @@
-import Main from 'components/Main'
+import { useRouter } from 'next/router'
 
-function Home() {
-  return <Main />
+const Home = () => {
+  const router = useRouter()
+  router.push('/monitorings')
+  return <></>
 }
 
 export default Home
