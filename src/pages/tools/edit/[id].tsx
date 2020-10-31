@@ -37,8 +37,11 @@ const Tools = () => {
     })
   }
 
-  const onDelete = (id: number) => {
-    console.log(id)
+  const onDelete = () => {
+    strapi.request('delete', `/tools/${id}`).then((res) => {
+      console.log(res)
+      router.push('/tools')
+    })
   }
 
   const onSubmit = () => {
@@ -62,7 +65,7 @@ const Tools = () => {
             Tool - edit
           </Heading>
         </div>
-        <Button className="mx-1" size="small">
+        <Button onClick={() => onDelete()} className="mx-1" size="small">
           Delete
         </Button>
       </div>

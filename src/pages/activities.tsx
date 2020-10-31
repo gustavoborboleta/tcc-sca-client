@@ -17,7 +17,9 @@ const Activities = () => {
   console.log(data)
 
   const onDelete = (id: number) => {
-    console.log(id)
+    strapi.request('delete', `/activities/${id}`).then((res) => {
+      console.log(res)
+    })
   }
 
   const goEdit = (id: number) => {
