@@ -67,8 +67,11 @@ const Occurrences = () => {
     })
   }
 
-  const onDelete = (id: number) => {
-    console.log(id)
+  const onDelete = () => {
+    strapi.request('delete', `/occurrences/${id}`).then((res) => {
+      console.log(res)
+      router.push('/occurrences')
+    })
   }
 
   const onChangeMine = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,7 +143,7 @@ const Occurrences = () => {
             Occurrence - edit
           </Heading>
         </div>
-        <Button className="mx-1" size="small">
+        <Button onClick={() => onDelete()} className="mx-1" size="small">
           Delete
         </Button>
       </div>

@@ -66,8 +66,11 @@ const Activities = () => {
     })
   }
 
-  const onDelete = (id: number) => {
-    console.log(id)
+  const onDelete = () => {
+    strapi.request('delete', `/activities/${activities.id}`).then((res) => {
+      console.log(res)
+      router.push('/activities')
+    })
   }
 
   const onChangeMine = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +141,7 @@ const Activities = () => {
             Activitie - edit
           </Heading>
         </div>
-        <Button className="mx-1" size="small">
+        <Button onClick={() => onDelete()} className="mx-1" size="small">
           Delete
         </Button>
       </div>
