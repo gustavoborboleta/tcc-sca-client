@@ -32,48 +32,6 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <header>
-        {/* <Nav className="navbar navbar-dark bg-dark">
-          <NavItem>
-            <Link href="/">
-              <a className="navbar-brand">SCA</a>
-            </Link>
-            {isAuthenticated ? (
-              <>
-                <Link href="/tools">
-                  <a className="navbar-brand">Tools</a>
-                </Link>
-                <Link href="/maintenances">
-                  <a className="navbar-brand">Maintenances</a>
-                </Link>
-                <Link href="/activities">
-                  <a className="navbar-brand">Activities</a>
-                </Link>
-                <Link href="/occurrences">
-                  <a className="navbar-brand">Occurrences</a>
-                </Link>
-                <Link href="/monitorings">
-                  <a className="navbar-brand">Monitorings</a>
-                </Link>
-              </>
-            ) : null}
-          </NavItem>
-          {isAuthenticated ? (
-            <>
-              <NavItem className="ml-auto">
-                <span style={{ color: 'white', marginRight: 30 }}>
-                  {user.username}
-                </span>
-              </NavItem>
-              <NavItem>
-                <Link href="/">
-                  <a className="logout" onClick={() => UnsetToken()}>
-                    Logout
-                  </a>
-                </Link>
-              </NavItem>
-            </>
-          ) : null}
-        </Nav> */}
         <Navbar
           className="navbar navbar-dark bg-dark"
           color="dark"

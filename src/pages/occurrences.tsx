@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { Table } from 'reactstrap'
 import useSWR from 'swr'
+import Link from 'next/link'
 import { strapi } from 'utils/auth/auth'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
@@ -31,9 +32,11 @@ const Occurrences = () => {
             Occurrences
           </Heading>
         </div>
-        <Button className="mx-1" size="small">
-          Create
-        </Button>
+        <Link href="/occurrences/create">
+          <Button className="mx-1" size="small">
+            Create
+          </Button>
+        </Link>
       </div>
       <Table hover>
         <thead>

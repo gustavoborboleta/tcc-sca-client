@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Form, FormGroup, Label, Input } from 'reactstrap'
 import useSWR from 'swr'
 import { strapi } from 'utils/auth/auth'
-import Button from '../../../components/Button'
-import Heading from '../../../components/Heading'
+import Button from '../../components/Button'
+import Heading from '../../components/Heading'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-type ActivitiesProps = {
+type OccurrencesProps = {
   id: string
-  Description: string
-  Date: Date
+  Title: string
+  description: string
+  date: Date
   mine: MineProps
   sector: SectorProps
   shift: ShiftProps
@@ -34,40 +35,25 @@ type ShiftProps = {
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
-const Activities = () => {
-  const [activities, setActivities] = useState({
-    Date: new Date()
-  } as ActivitiesProps)
+const Occurrences = () => {
+  const [occurrences, setOccurrences] = useState({
+    date: new Date()
+  } as OccurrencesProps)
   const [startDate, setStartDate] = useState(new Date())
   const [mineSelect, setMineSelect] = useState({} as MineProps)
   const [sectorSelect, setSectorSelect] = useState({} as SectorProps)
   const [shiftSelect, setShiftSelect] = useState({} as ShiftProps)
   const router = useRouter()
-  const { id } = router.query
 
-  const { data } = useSWR(`/activities/${id}`, fetcher)
   const { data: mines } = useSWR(`/mines`, fetcher)
   const { data: sectors } = useSWR(`/sectors`, fetcher)
   const { data: shifts } = useSWR(`/shifts`, fetcher)
 
-  useEffect(() => {
-    if (data) {
-      setActivities({
-        ...data
-      })
-      setStartDate(new Date(data.Date))
-    }
-  }, [data])
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setActivities({
-      ...activities,
+    setOccurrences({
+      ...occurrences,
       [e.target.name]: e.target.value
     })
-  }
-
-  const onDelete = (id: number) => {
-    console.log(id)
   }
 
   const onChangeMine = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,40 +93,34 @@ const Activities = () => {
   const onSubmit = () => {
     // startDate.setDate(startDate.getDate() - 1)
     strapi
-      .request('put', `/activities/${activities.id}`, {
+      .request('put', `/occurrences/${occurrences.id}`, {
         data: {
-          Description: activities.Description,
-          Date: startDate,
+          description: occurrences.description,
+          Title: occurrences.Title,
+          date: startDate,
           mine: {
-            id: mineSelect.id || activities.mine.id
+            id: mineSelect.id
           },
           sector: {
-            id: sectorSelect.id || activities.sector.id
+            id: sectorSelect.id
           },
           shift: {
-            id: shiftSelect.id || activities.shift.id
+            id: shiftSelect.id
           }
         }
       })
       .then((res) => {
         console.log(res)
-        router.push('/activities')
+        router.push('/occurrences')
       })
   }
 
-  console.log(mineSelect)
-
-  return data && activities && mines && sectors && shifts ? (
+  return occurrences && mines && sectors && shifts ? (
     <>
-      <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
-            Activitie - edit
-          </Heading>
-        </div>
-        <Button className="mx-1" size="small">
-          Delete
-        </Button>
+      <div className="py-5 mx-1">
+        <Heading color={'black'} lineLeft={true}>
+          Occurrence - create
+        </Heading>
       </div>
       <Form
         onSubmit={(e) => {
@@ -150,15 +130,26 @@ const Activities = () => {
         }}
       >
         <FormGroup>
-          <Label for="name">Description</Label>
+          <Label for="title">Title</Label>
           <Input
             onChange={(e) => onChange(e)}
-            value={activities.Description}
+            value={occurrences.Title}
             type="text"
-            name="Description"
-            id="name"
+            name="Title"
+            id="title"
             required
-            placeholder="Chave de fenda"
+            style={{ height: 50, fontSize: '1.2em' }}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="description">Description</Label>
+          <Input
+            onChange={(e) => onChange(e)}
+            value={occurrences.description}
+            type="text"
+            name="description"
+            id="description"
+            required
             style={{ height: 50, fontSize: '1.2em' }}
           />
         </FormGroup>
@@ -238,11 +229,11 @@ const Activities = () => {
           </Input>
         </FormGroup>
         <div className="float-left">
-          <Link href="/activities">
+          <Link href="/occurrences">
             <Button>Cancel</Button>
           </Link>
         </div>
-        <Button className="float-right" type="submit">
+        <Button type="submit" className="float-right">
           Save
         </Button>
       </Form>
@@ -250,4 +241,4 @@ const Activities = () => {
   ) : null
 }
 
-export default Activities
+export default Occurrences

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { Table } from 'reactstrap'
 import useSWR from 'swr'
+import Link from 'next/link'
 import { strapi } from 'utils/auth/auth'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
@@ -31,9 +32,11 @@ const Tools = () => {
             Tools
           </Heading>
         </div>
-        <Button className="mx-1" size="small">
-          Create
-        </Button>
+        <Link href="/tools/create">
+          <Button className="mx-1" size="small">
+            Create
+          </Button>
+        </Link>
       </div>
       <Table hover>
         <thead>
@@ -49,7 +52,9 @@ const Tools = () => {
             <tr key={tool.id}>
               <th scope="row">{tool.id}</th>
               <td>{tool.Name}</td>
-              <td>{tool.tool_maintenance.Date}</td>
+              <td>
+                {tool.tool_maintenance ? tool.tool_maintenance.Date : null}
+              </td>
               <td>
                 <Button
                   onClick={() => goEdit(tool.id)}

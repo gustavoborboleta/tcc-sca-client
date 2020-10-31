@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Form, FormGroup, Label, Input } from 'reactstrap'
 import useSWR from 'swr'
 import { strapi } from 'utils/auth/auth'
-import Button from '../../../components/Button'
-import Heading from '../../../components/Heading'
+import Button from '../../components/Button'
+import Heading from '../../components/Heading'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -43,31 +43,16 @@ const Activities = () => {
   const [sectorSelect, setSectorSelect] = useState({} as SectorProps)
   const [shiftSelect, setShiftSelect] = useState({} as ShiftProps)
   const router = useRouter()
-  const { id } = router.query
 
-  const { data } = useSWR(`/activities/${id}`, fetcher)
   const { data: mines } = useSWR(`/mines`, fetcher)
   const { data: sectors } = useSWR(`/sectors`, fetcher)
   const { data: shifts } = useSWR(`/shifts`, fetcher)
-
-  useEffect(() => {
-    if (data) {
-      setActivities({
-        ...data
-      })
-      setStartDate(new Date(data.Date))
-    }
-  }, [data])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setActivities({
       ...activities,
       [e.target.name]: e.target.value
     })
-  }
-
-  const onDelete = (id: number) => {
-    console.log(id)
   }
 
   const onChangeMine = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +66,7 @@ const Activities = () => {
           })[0]
     )
   }
+
   const onChangeSector = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSectorSelect(
       e.target.value == 'Select'
@@ -107,18 +93,18 @@ const Activities = () => {
   const onSubmit = () => {
     // startDate.setDate(startDate.getDate() - 1)
     strapi
-      .request('put', `/activities/${activities.id}`, {
+      .request('post', `/activities`, {
         data: {
           Description: activities.Description,
           Date: startDate,
           mine: {
-            id: mineSelect.id || activities.mine.id
+            id: mineSelect.id
           },
           sector: {
-            id: sectorSelect.id || activities.sector.id
+            id: sectorSelect.id
           },
           shift: {
-            id: shiftSelect.id || activities.shift.id
+            id: shiftSelect.id
           }
         }
       })
@@ -130,17 +116,12 @@ const Activities = () => {
 
   console.log(mineSelect)
 
-  return data && activities && mines && sectors && shifts ? (
+  return activities && mines && sectors && shifts ? (
     <>
-      <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
-            Activitie - edit
-          </Heading>
-        </div>
-        <Button className="mx-1" size="small">
-          Delete
-        </Button>
+      <div className="py-5 mx-1">
+        <Heading color={'black'} lineLeft={true}>
+          Activitie - create
+        </Heading>
       </div>
       <Form
         onSubmit={(e) => {
