@@ -1,5 +1,6 @@
 import { Table } from 'reactstrap'
 import useSWR from 'swr'
+import Link from 'next/link'
 import { strapi } from 'utils/auth/auth'
 import Heading from '../components/Heading'
 
@@ -32,14 +33,16 @@ const Monitorings = () => {
         </thead>
         <tbody>
           {data.map((monitorings: any) => (
-            <tr key={monitorings.id}>
-              <th scope="row">{monitorings.id}</th>
-              <td>{monitorings.created_at}</td>
-              <td>{monitorings.humidity}</td>
-              <td>{monitorings.pressure}</td>
-              <td>{monitorings.sector.Name}</td>
-              <td>{monitorings.mine.Name}</td>
-            </tr>
+            <Link key={monitorings.id} href={`/monitorings/${monitorings.id}`}>
+              <tr style={{ cursor: 'pointer' }}>
+                <th scope="row">{monitorings.id}</th>
+                <td>{monitorings.created_at}</td>
+                <td>{monitorings.humidity}</td>
+                <td>{monitorings.pressure}</td>
+                <td>{monitorings.sector.Name}</td>
+                <td>{monitorings.mine.Name}</td>
+              </tr>
+            </Link>
           ))}
         </tbody>
       </Table>
