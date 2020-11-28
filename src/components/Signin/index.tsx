@@ -1,5 +1,5 @@
 import * as S from './styles'
-import { Container, Row, Col, Form, FormGroup, Label, Input } from 'reactstrap'
+import { Container, Row, Col, Form, FormGroup, Input } from 'reactstrap'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../contexts/auth'
 import { StrapiLogin } from 'utils/auth/auth'
@@ -12,7 +12,7 @@ const Signin = () => {
     password: ''
   })
 
-  const { user, setUser } = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({

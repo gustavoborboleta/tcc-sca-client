@@ -1,4 +1,4 @@
-import * as S from './styles'
+// import * as S from './styles'
 import Link from 'next/link'
 import { UnsetToken } from '../../utils/auth/auth'
 import {
@@ -25,7 +25,7 @@ export type LayoutProps = {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const { user, isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
 
   const toggle = () => setIsOpen(!isOpen)
