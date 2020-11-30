@@ -33,6 +33,10 @@ const Maintenance = () => {
     })
   }
 
+  const goView = (id: number) => {
+    router.push(`/maintenances/${id}`)
+  }
+
   const goEdit = (id: number) => {
     router.push(`/maintenances/edit/${id}`)
   }
@@ -40,13 +44,13 @@ const Maintenance = () => {
   return (
     <>
       <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
+        <div className="m-1">
+          <Heading color={'black'} lineLeft>
             Maintenance
           </Heading>
         </div>
         <Link href="/maintenances/create">
-          <Button className="mx-1" size="small">
+          <Button className="m-1" size="small">
             Create
           </Button>
         </Link>
@@ -69,6 +73,13 @@ const Maintenance = () => {
               <td>{maintenance.Description}</td>
               <td>{maintenance.tool ? maintenance.tool.Name : null}</td>
               <td>
+                <Button
+                  onClick={() => goView(maintenance.id)}
+                  className="m-1"
+                  size="small"
+                >
+                  View
+                </Button>
                 <Button
                   onClick={() => goEdit(maintenance.id)}
                   className="m-1"

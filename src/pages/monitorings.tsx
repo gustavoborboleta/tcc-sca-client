@@ -14,8 +14,8 @@ const Monitorings = () => {
 
   return (
     <>
-      <div className="py-5 mx-1">
-        <Heading color={'black'} lineLeft={true}>
+      <div className="py-5 m-1">
+        <Heading color={'black'} lineLeft>
           Monitorings
         </Heading>
       </div>

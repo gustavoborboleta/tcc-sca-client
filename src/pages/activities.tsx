@@ -33,6 +33,10 @@ const Activities = () => {
     })
   }
 
+  const goView = (id: number) => {
+    router.push(`/activities/${id}`)
+  }
+
   const goEdit = (id: number) => {
     router.push(`/activities/edit/${id}`)
   }
@@ -40,13 +44,13 @@ const Activities = () => {
   return (
     <>
       <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
+        <div className="m-1">
+          <Heading color={'black'} lineLeft>
             Activities
           </Heading>
         </div>
         <Link href="/activities/create">
-          <Button className="mx-1" size="small">
+          <Button className="m-1" size="small">
             Create
           </Button>
         </Link>
@@ -73,6 +77,13 @@ const Activities = () => {
               <td>{activitie.sector.Name}</td>
               <td>{activitie.mine.Name}</td>
               <td>
+                <Button
+                  onClick={() => goView(activitie.id)}
+                  className="m-1"
+                  size="small"
+                >
+                  View
+                </Button>
                 <Button
                   onClick={() => goEdit(activitie.id)}
                   className="m-1"

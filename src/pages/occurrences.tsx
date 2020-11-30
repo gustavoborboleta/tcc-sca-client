@@ -33,6 +33,10 @@ const Occurrences = () => {
     })
   }
 
+  const goView = (id: number) => {
+    router.push(`/occurrences/${id}`)
+  }
+
   const goEdit = (id: number) => {
     router.push(`/occurrences/edit/${id}`)
   }
@@ -40,13 +44,13 @@ const Occurrences = () => {
   return (
     <>
       <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
+        <div className="m-1">
+          <Heading color={'black'} lineLeft>
             Occurrences
           </Heading>
         </div>
         <Link href="/occurrences/create">
-          <Button className="mx-1" size="small">
+          <Button className="m-1" size="small">
             Create
           </Button>
         </Link>
@@ -71,6 +75,13 @@ const Occurrences = () => {
               <td>{occurrences.sector.Name}</td>
               <td>{occurrences.mine.Name}</td>
               <td>
+                <Button
+                  onClick={() => goView(occurrences.id)}
+                  className="m-1"
+                  size="small"
+                >
+                  View
+                </Button>
                 <Button
                   onClick={() => goEdit(occurrences.id)}
                   className="m-1"

@@ -55,7 +55,7 @@ const Signin = () => {
                   }}
                 >
                   <FormGroup>
-                    <Heading color={'black'} lineLeft={true}>
+                    <Heading color={'black'} lineLeft>
                       Email:
                     </Heading>
                     <Input
@@ -68,7 +68,7 @@ const Signin = () => {
                     />
                   </FormGroup>
                   <FormGroup style={{ marginBottom: 30 }}>
-                    <Heading color={'black'} lineLeft={true}>
+                    <Heading color={'black'} lineLeft>
                       Password:
                     </Heading>
                     <Input

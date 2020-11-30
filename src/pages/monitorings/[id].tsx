@@ -19,14 +19,14 @@ const Monitorings = () => {
   return (
     <>
       <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
+        <div className="m-1">
+          <Heading color={'black'} lineLeft>
             Monitoring
           </Heading>
         </div>
         <div>
           <Link href={`/monitorings`}>
-            <Button className="mx-1" size="small">
+            <Button className="m-1" size="small">
               Back
             </Button>
           </Link>

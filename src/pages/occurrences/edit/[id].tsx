@@ -56,7 +56,7 @@ const Occurrences = () => {
       setOccurrences({
         ...data
       })
-      let dateTemp = new Date(data.Date)
+      let dateTemp = new Date(data.date)
       dateTemp = new Date(dateTemp.setDate(dateTemp.getDate() + 1))
       setStartDate(dateTemp)
     }
@@ -135,12 +135,12 @@ const Occurrences = () => {
   return data && occurrences && mines && sectors && shifts ? (
     <>
       <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
+        <div className="m-1">
+          <Heading color={'black'} lineLeft>
             Occurrence - edit
           </Heading>
         </div>
-        <Button onClick={() => onDelete()} className="mx-1" size="small">
+        <Button onClick={() => onDelete()} className="m-1" size="small">
           Delete
         </Button>
       </div>

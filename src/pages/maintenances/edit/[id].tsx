@@ -89,12 +89,12 @@ const Maintenances = () => {
   return data && tools ? (
     <>
       <div className="py-5 d-flex justify-content-between">
-        <div className="mx-1">
-          <Heading color={'black'} lineLeft={true}>
+        <div className="m-1">
+          <Heading color={'black'} lineLeft>
             Maintenance - edit
           </Heading>
         </div>
-        <Button onClick={() => onDelete()} className="mx-1" size="small">
+        <Button onClick={() => onDelete()} className="m-1" size="small">
           Delete
         </Button>
       </div>
@@ -106,7 +106,7 @@ const Maintenances = () => {
         }}
       >
         <FormGroup>
-          <Label for="tools">Mine</Label>
+          <Label for="tools">Tool</Label>
           <Input
             onChange={(e) => onChangeTool(e)}
             required
