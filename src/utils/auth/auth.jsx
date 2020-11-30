@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import Strapi from 'strapi-sdk-javascript/build/main'
 import Router, { useRouter } from 'next/router'
 
-const apiUrl = process.env.API_URL || 'http://localhost:1337'
+const apiUrl = process.env.API_URL || 'https://puc-tcc-sca-api.herokuapp.com'
 export const strapi = new Strapi(apiUrl)
 
 export const StrapiLogin = (email, password) => {
