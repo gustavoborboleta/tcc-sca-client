@@ -38,7 +38,9 @@ const Maintenances = () => {
       setMaintenances({
         ...data
       })
-      setStartDate(new Date(data.Date))
+      let dateTemp = new Date(data.Date)
+      dateTemp = new Date(dateTemp.setDate(dateTemp.getDate() + 1))
+      setStartDate(dateTemp)
     }
   }, [data])
 
@@ -53,8 +55,7 @@ const Maintenances = () => {
   }
 
   const onDelete = () => {
-    strapi.request('delete', `/tools/${id}`).then((res) => {
-      console.log(res)
+    strapi.request('delete', `/tool-maintenances/${id}`).then(() => {
       router.push('/tools')
     })
   }
@@ -76,12 +77,11 @@ const Maintenances = () => {
       .request('put', `/tool-maintenances/${maintenances.id}`, {
         data: {
           Description: maintenances.Description,
-          Date: startDate,
+          Date: new Date(startDate.setDate(startDate.getDate() - 1)),
           tool: toolSelect.id
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/maintenances')
       })
   }

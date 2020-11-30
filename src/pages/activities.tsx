@@ -5,20 +5,31 @@ import Link from 'next/link'
 import { strapi } from 'utils/auth/auth'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
+import { useEffect, useState } from 'react'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
 const Activities = () => {
-  const { data, error } = useSWR('/activities', fetcher)
   const router = useRouter()
+  const [activities, setActivities] = useState([])
+  const { data, error } = useSWR('/activities', fetcher)
+
+  useEffect(() => {
+    if (data) {
+      setActivities(data)
+    }
+  }, [data])
 
   if (error) return 'An error has occurred.'
   if (!data) return 'Loading...'
-  console.log(data)
 
-  const onDelete = (id: number) => {
-    strapi.request('delete', `/activities/${id}`).then((res) => {
-      console.log(res)
+  const onDelete = async (id: number) => {
+    await strapi.request('delete', `/activities/${id}`).then((res) => {
+      setActivities(
+        activities.filter((activitie: any) => {
+          return activitie.id !== res.id
+        })
+      )
     })
   }
 
@@ -53,24 +64,24 @@ const Activities = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((activities: any) => (
-            <tr key={activities.id}>
-              <th scope="row">{activities.id}</th>
-              <td>{activities.Date}</td>
-              <td>{activities.Description}</td>
-              <td>{activities.shift.Name}</td>
-              <td>{activities.sector.Name}</td>
-              <td>{activities.mine.Name}</td>
+          {activities.map((activitie: any) => (
+            <tr key={activitie.id}>
+              <th scope="row">{activitie.id}</th>
+              <td>{activitie.Date}</td>
+              <td>{activitie.Description}</td>
+              <td>{activitie.shift.Name}</td>
+              <td>{activitie.sector.Name}</td>
+              <td>{activitie.mine.Name}</td>
               <td>
                 <Button
-                  onClick={() => goEdit(activities.id)}
+                  onClick={() => goEdit(activitie.id)}
                   className="m-1"
                   size="small"
                 >
                   Edit
                 </Button>
                 <Button
-                  onClick={() => onDelete(activities.id)}
+                  onClick={() => onDelete(activitie.id)}
                   className="m-1"
                   size="small"
                 >

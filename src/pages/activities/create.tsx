@@ -91,7 +91,6 @@ const Activities = () => {
   }
 
   const onSubmit = () => {
-    // startDate.setDate(startDate.getDate() - 1)
     strapi
       .request('post', `/activities`, {
         data: {
@@ -108,13 +107,10 @@ const Activities = () => {
           }
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/activities')
       })
   }
-
-  console.log(mineSelect)
 
   return activities && mines && sectors && shifts ? (
     <>
@@ -139,7 +135,6 @@ const Activities = () => {
             name="Description"
             id="name"
             required
-            placeholder="Chave de fenda"
             style={{ height: 50, fontSize: '1.2em' }}
           />
         </FormGroup>

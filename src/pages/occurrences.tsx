@@ -5,20 +5,31 @@ import Link from 'next/link'
 import { strapi } from 'utils/auth/auth'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
+import { useEffect, useState } from 'react'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
 const Occurrences = () => {
-  const { data, error } = useSWR('/occurrences', fetcher)
   const router = useRouter()
+  const [occurrences, setOccurrences] = useState([])
+  const { data, error } = useSWR('/occurrences', fetcher)
+
+  useEffect(() => {
+    if (data) {
+      setOccurrences(data)
+    }
+  }, [data])
 
   if (error) return 'An error has occurred.'
   if (!data) return 'Loading...'
-  console.log(data)
 
-  const onDelete = (id: number) => {
-    strapi.request('delete', `/occurrences/${id}`).then((res) => {
-      console.log(res)
+  const onDelete = async (id: number) => {
+    await strapi.request('delete', `/occurrences/${id}`).then((res) => {
+      setOccurrences(
+        occurrences.filter((tool: any) => {
+          return tool.id !== res.id
+        })
+      )
     })
   }
 
@@ -45,7 +56,6 @@ const Occurrences = () => {
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Title</th>
-            <th scope="col">Level</th>
             <th scope="col">Shift</th>
             <th scope="col">Sector</th>
             <th scope="col">Mine</th>
@@ -53,11 +63,10 @@ const Occurrences = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((occurrences: any) => (
+          {occurrences.map((occurrences: any) => (
             <tr key={occurrences.id}>
               <th scope="row">{occurrences.id}</th>
               <td>{occurrences.Title}</td>
-              <td>{occurrences.level}</td>
               <td>{occurrences.shift.Name}</td>
               <td>{occurrences.sector.Name}</td>
               <td>{occurrences.mine.Name}</td>

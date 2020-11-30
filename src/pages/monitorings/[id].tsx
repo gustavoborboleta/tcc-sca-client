@@ -15,7 +15,6 @@ const Monitorings = () => {
 
   if (error) return 'An error has occurred.'
   if (!data) return 'Loading...'
-  console.log(data)
 
   return (
     <>

@@ -28,8 +28,7 @@ const Tools = () => {
           Name: tool.Name
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/tools')
       })
   }

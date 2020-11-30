@@ -93,7 +93,7 @@ const Occurrences = () => {
   const onSubmit = () => {
     // startDate.setDate(startDate.getDate() - 1)
     strapi
-      .request('put', `/occurrences/${occurrences.id}`, {
+      .request('post', `/occurrences`, {
         data: {
           description: occurrences.description,
           Title: occurrences.Title,
@@ -109,8 +109,7 @@ const Occurrences = () => {
           }
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/occurrences')
       })
   }

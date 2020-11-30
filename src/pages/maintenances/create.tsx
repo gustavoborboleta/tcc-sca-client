@@ -59,8 +59,7 @@ const Maintenances = () => {
           tool: toolSelect.id
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/maintenances')
       })
   }

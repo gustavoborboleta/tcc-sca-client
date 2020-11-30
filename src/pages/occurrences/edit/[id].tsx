@@ -56,7 +56,9 @@ const Occurrences = () => {
       setOccurrences({
         ...data
       })
-      setStartDate(new Date(data.date))
+      let dateTemp = new Date(data.Date)
+      dateTemp = new Date(dateTemp.setDate(dateTemp.getDate() + 1))
+      setStartDate(dateTemp)
     }
   }, [data])
 
@@ -68,8 +70,7 @@ const Occurrences = () => {
   }
 
   const onDelete = () => {
-    strapi.request('delete', `/occurrences/${id}`).then((res) => {
-      console.log(res)
+    strapi.request('delete', `/occurrences/${id}`).then(() => {
       router.push('/occurrences')
     })
   }
@@ -109,13 +110,12 @@ const Occurrences = () => {
   }
 
   const onSubmit = () => {
-    // startDate.setDate(startDate.getDate() - 1)
     strapi
       .request('put', `/occurrences/${occurrences.id}`, {
         data: {
           description: occurrences.description,
           Title: occurrences.Title,
-          date: startDate,
+          date: new Date(startDate.setDate(startDate.getDate() - 1)),
           mine: {
             id: mineSelect.id || occurrences.mine.id
           },
@@ -127,13 +127,10 @@ const Occurrences = () => {
           }
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/occurrences')
       })
   }
-
-  console.log(mineSelect)
 
   return data && occurrences && mines && sectors && shifts ? (
     <>

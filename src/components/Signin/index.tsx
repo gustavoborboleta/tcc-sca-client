@@ -25,7 +25,6 @@ const Signin = () => {
     e.preventDefault()
     StrapiLogin(data.email, data.password)
       .then((res) => {
-        console.log(res)
         setUser({
           ...res
         })

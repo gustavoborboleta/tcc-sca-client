@@ -5,20 +5,31 @@ import Link from 'next/link'
 import { strapi } from 'utils/auth/auth'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
+import { useEffect, useState } from 'react'
 
 const fetcher = (url: string) => strapi.request('get', url).then((res) => res)
 
 const Maintenance = () => {
-  const { data, error } = useSWR('/tool-maintenances', fetcher)
   const router = useRouter()
+  const [maintenances, setMaintenances] = useState([])
+  const { data, error } = useSWR('/tool-maintenances', fetcher)
+
+  useEffect(() => {
+    if (data) {
+      setMaintenances(data)
+    }
+  }, [data])
 
   if (error) return 'An error has occurred.'
   if (!data) return 'Loading...'
-  console.log(data)
 
-  const onDelete = (id: number) => {
-    strapi.request('delete', `/maintenances/${id}`).then((res) => {
-      console.log(res)
+  const onDelete = async (id: number) => {
+    await strapi.request('delete', `/tool-maintenances/${id}`).then((res) => {
+      setMaintenances(
+        maintenances.filter((maintenance: any) => {
+          return maintenance.id !== res.id
+        })
+      )
     })
   }
 
@@ -51,7 +62,7 @@ const Maintenance = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((maintenance: any) => (
+          {maintenances.map((maintenance: any) => (
             <tr key={maintenance.id}>
               <th scope="row">{maintenance.id}</th>
               <td>{maintenance.Date}</td>

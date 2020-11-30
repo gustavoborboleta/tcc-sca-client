@@ -55,7 +55,9 @@ const Activities = () => {
       setActivities({
         ...data
       })
-      setStartDate(new Date(data.Date))
+      let dateTemp = new Date(data.Date)
+      dateTemp = new Date(dateTemp.setDate(dateTemp.getDate() + 1))
+      setStartDate(dateTemp)
     }
   }, [data])
 
@@ -67,8 +69,7 @@ const Activities = () => {
   }
 
   const onDelete = () => {
-    strapi.request('delete', `/activities/${activities.id}`).then((res) => {
-      console.log(res)
+    strapi.request('delete', `/activities/${activities.id}`).then(() => {
       router.push('/activities')
     })
   }
@@ -108,12 +109,11 @@ const Activities = () => {
   }
 
   const onSubmit = () => {
-    // startDate.setDate(startDate.getDate() - 1)
     strapi
       .request('put', `/activities/${activities.id}`, {
         data: {
           Description: activities.Description,
-          Date: startDate,
+          Date: new Date(startDate.setDate(startDate.getDate() - 1)),
           mine: {
             id: mineSelect.id || activities.mine.id
           },
@@ -125,13 +125,10 @@ const Activities = () => {
           }
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/activities')
       })
   }
-
-  console.log(mineSelect)
 
   return data && activities && mines && sectors && shifts ? (
     <>
@@ -161,7 +158,6 @@ const Activities = () => {
             name="Description"
             id="name"
             required
-            placeholder="Chave de fenda"
             style={{ height: 50, fontSize: '1.2em' }}
           />
         </FormGroup>

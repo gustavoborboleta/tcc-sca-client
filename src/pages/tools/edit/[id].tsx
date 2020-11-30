@@ -38,8 +38,7 @@ const Tools = () => {
   }
 
   const onDelete = () => {
-    strapi.request('delete', `/tools/${id}`).then((res) => {
-      console.log(res)
+    strapi.request('delete', `/tools/${id}`).then(() => {
       router.push('/tools')
     })
   }
@@ -51,8 +50,7 @@ const Tools = () => {
           Name: tool.Name
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push('/tools')
       })
   }
